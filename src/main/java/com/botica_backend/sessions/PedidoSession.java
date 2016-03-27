@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Pedido;
+import static com.botica_backend.entities.Pedido_.idPedido;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -52,6 +53,11 @@ public class PedidoSession {
         } catch (NoResultException ex) {
             return null;
         }
+
+    }
+    
+    public Pedido find(int id) {
+      return entityManager.find(Pedido.class, id);
 
     }
 }

@@ -5,8 +5,13 @@
  */
 package com.botica_backend.entities;
 
+import com.botica_backend.rest.auth.DigestUtil;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,6 +51,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByCamaracomercio", query = "SELECT u FROM Usuario u WHERE u.camaracomercio = :camaracomercio"),
     @NamedQuery(name = "Usuario.findByInvima", query = "SELECT u FROM Usuario u WHERE u.invima = :invima")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,7 +84,7 @@ public class Usuario implements Serializable {
     private String direccion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 64)
     @Column(name = "clave")
     private String clave;
     @Size(max = 45)
@@ -174,7 +180,11 @@ public class Usuario implements Serializable {
     }
 
     public void setClave(String clave) {
-        this.clave = clave;
+        try {
+            this.clave = DigestUtil.generateDigest(clave);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getNit() {
@@ -236,6 +246,8 @@ public class Usuario implements Serializable {
         this.ciudad = ciudad;
     }
 
+
+
     public Rol getIdRol() {
         return idRol;
     }
@@ -268,5 +280,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.botica_backend.entities.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }

@@ -6,9 +6,12 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.ZonaEnvio;
+import static com.botica_backend.entities.ZonaEnvio_.idZonaEnvio;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -39,5 +42,18 @@ public class ZonaEnvioSession {
           CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(ZonaEnvio.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+    
+    public ZonaEnvio find(int id) {
+        try {
+            return (ZonaEnvio) entityManager.createNamedQuery("Sede.findByIdZonaEnvio")
+                    .setParameter("idZonaEnvio", idZonaEnvio)
+                    .getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
     }
 }
