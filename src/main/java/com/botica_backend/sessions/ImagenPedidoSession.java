@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.ImagenPedido;
+import com.botica_backend.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,11 +26,11 @@ public class ImagenPedidoSession {
     public void create(ImagenPedido imagenpedido) {
         entityManager.persist(imagenpedido);
     }
-    
+
     public void update(ImagenPedido imagenpedido) {
         entityManager.merge(imagenpedido);
     }
-    
+
     public void remove(ImagenPedido imagenpedido) {
         entityManager.remove(imagenpedido);
     }
@@ -38,5 +39,10 @@ public class ImagenPedidoSession {
         CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(ImagenPedido.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+
+    public ImagenPedido find(int id) {
+
+        return entityManager.find(ImagenPedido.class, id);
     }
 }

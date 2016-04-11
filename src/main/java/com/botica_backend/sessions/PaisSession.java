@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Pais;
+import com.botica_backend.entities.Rol;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,5 +38,9 @@ public class PaisSession {
         CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Pais.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+       public Pais find(int id) {
+
+        return entityManager.find(Pais.class, id);
     }
 }

@@ -44,6 +44,11 @@ public class UsuarioSession {
         return entityManager.createQuery(cq).getResultList();
     }
 
+    public Usuario find(int id) {
+
+        return entityManager.find(Usuario.class, id);
+    }
+
     public Usuario findByRol(int idRol) {
         try {
             return (Usuario) entityManager.createNamedQuery("Usuario.findByRol")

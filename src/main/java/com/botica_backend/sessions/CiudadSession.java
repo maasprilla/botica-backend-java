@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Ciudad;
+import com.botica_backend.entities.Rol;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -39,5 +40,9 @@ public class CiudadSession {
           CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Ciudad.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+       public Ciudad find(int id) {
+
+        return entityManager.find(Ciudad.class, id);
     }
 }

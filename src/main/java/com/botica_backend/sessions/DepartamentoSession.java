@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Departamento;
+import com.botica_backend.entities.Rol;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -38,5 +39,9 @@ public class DepartamentoSession {
         CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Departamento.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+       public Departamento find(int id) {
+
+        return entityManager.find(Departamento.class, id);
     }
 }
