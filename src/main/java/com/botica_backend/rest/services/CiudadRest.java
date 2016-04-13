@@ -49,7 +49,7 @@ public class CiudadRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ciudad> findAll() {
-        return ciudadSession.findAll();
+        return ciudadSession.findAllByNombreAsc();
     }
 
     @GET

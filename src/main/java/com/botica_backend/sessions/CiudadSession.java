@@ -7,9 +7,12 @@ package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Ciudad;
 import com.botica_backend.entities.Rol;
+import com.botica_backend.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -22,27 +25,36 @@ public class CiudadSession {
 
     @PersistenceContext
     private EntityManager entityManager;
-    
-    
-    public void create (Ciudad ciudad) {
+
+    public void create(Ciudad ciudad) {
         entityManager.persist(ciudad);
     }
-    
-    public void update (Ciudad ciudad){
+
+    public void update(Ciudad ciudad) {
         entityManager.merge(ciudad);
-        
+
     }
-    public void remove (Ciudad ciudad){
+
+    public void remove(Ciudad ciudad) {
         entityManager.remove(ciudad);
-        
+
     }
-    public List<Ciudad> findAll(){
-          CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+
+    public List<Ciudad> findAll() {
+        CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Ciudad.class));
         return entityManager.createQuery(cq).getResultList();
     }
-       public Ciudad find(int id) {
+
+    public Ciudad find(int id) {
 
         return entityManager.find(Ciudad.class, id);
     }
+
+    public List<Ciudad> findAllByNombreAsc() {
+        return entityManager.createNamedQuery("Ciudad.findAllByNameAsc").getResultList();
+    }
+
+
+
 }
