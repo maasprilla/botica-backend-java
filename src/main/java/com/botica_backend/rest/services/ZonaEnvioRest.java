@@ -4,6 +4,7 @@ package com.botica_backend.rest.services;
 import com.botica_backend.entities.ZonaEnvio;
 import com.botica_backend.sessions.ZonaEnvioSession;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -48,6 +49,7 @@ public class ZonaEnvioRest {
     }
 
     @GET
+    @RolesAllowed("1")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ZonaEnvio> findAll() {
         return zonaEnvioSession.findAll();

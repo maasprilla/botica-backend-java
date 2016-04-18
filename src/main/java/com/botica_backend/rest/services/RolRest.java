@@ -4,6 +4,7 @@ package com.botica_backend.rest.services;
 import com.botica_backend.entities.Rol;
 import com.botica_backend.sessions.RolSession;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;

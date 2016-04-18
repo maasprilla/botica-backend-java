@@ -27,6 +27,8 @@ public class UsuarioRest {
     @EJB
     UsuarioSession usuarioSession;
     
+    
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Usuario usuario) {

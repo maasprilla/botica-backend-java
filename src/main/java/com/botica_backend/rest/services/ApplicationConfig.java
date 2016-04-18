@@ -1,7 +1,8 @@
 package com.botica_backend.rest.services;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 /**
  *
@@ -9,6 +10,10 @@ import javax.ws.rs.core.Application;
  */
 
 @ApplicationPath("webresources")
-public class ApplicationConfig extends Application {
-    
+public class ApplicationConfig extends ResourceConfig {
+
+    public ApplicationConfig() {
+        packages("com.botica_backend.rest.services;com.botica_backend.rest.auth");
+        register (RolesAllowedDynamicFeature.class);
+    }
 }
