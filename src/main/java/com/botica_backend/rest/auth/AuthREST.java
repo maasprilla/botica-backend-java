@@ -43,7 +43,7 @@ public class AuthREST {
         foundUser = usuarioSession.findByEmail(user.getEmail());
         if (foundUser == null) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(gson.toJson(NOT_FOUND_MSG)).build();
-        } else if (user.getClave().equals(foundUser.getClave())) {
+        } else if (user.getPassword().equals(foundUser.getPassword())) {
             final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser);
             return Response.ok().entity(gson.toJson(token)).build();
         }

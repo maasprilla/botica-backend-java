@@ -37,8 +37,9 @@ public class Rol implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 6)
     @Column(name = "id_rol")
-    private Integer idRol;
+    private String idRol;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -50,20 +51,20 @@ public class Rol implements Serializable {
     public Rol() {
     }
 
-    public Rol(Integer idRol) {
+    public Rol(String idRol) {
         this.idRol = idRol;
     }
 
-    public Rol(Integer idRol, String descripcion) {
+    public Rol(String idRol, String descripcion) {
         this.idRol = idRol;
         this.descripcion = descripcion;
     }
 
-    public Integer getIdRol() {
+    public String getIdRol() {
         return idRol;
     }
 
-    public void setIdRol(Integer idRol) {
+    public void setIdRol(String idRol) {
         this.idRol = idRol;
     }
 

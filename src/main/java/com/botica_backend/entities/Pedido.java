@@ -75,13 +75,13 @@ public class Pedido implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedido")
     private List<Factura> facturaList;
     @JoinColumn(name = "id_sede", referencedColumnName = "id_sede")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Sede idSede;
     @JoinColumn(name = "idusuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
     private Usuario idusuario;
     @JoinColumn(name = "id_zona_envio", referencedColumnName = "id_zona_envio")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private ZonaEnvio idZonaEnvio;
 
     public Pedido() {

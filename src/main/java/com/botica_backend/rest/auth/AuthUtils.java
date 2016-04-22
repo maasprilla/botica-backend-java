@@ -44,7 +44,7 @@ public final class AuthUtils {
         claim.setIssueTime(DateTime.now().toDate());
         claim.setExpirationTime(DateTime.now().plusDays(1).toDate());
         claim.setCustomClaim("user", user.getNombre() + " " + user.getApellido());
-        claim.setCustomClaim("roles", user.getIdRol().getIdRol().toString());
+        claim.setCustomClaim("roles", user.getIdRol().getIdRol());
 
         JWSSigner signer = new MACSigner(TOKEN_SECRET);
         SignedJWT jwt = new SignedJWT(JWT_HEADER, claim);

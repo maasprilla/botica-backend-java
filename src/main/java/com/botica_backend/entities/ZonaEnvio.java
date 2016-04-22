@@ -8,7 +8,6 @@ package com.botica_backend.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -44,7 +43,7 @@ public class ZonaEnvio implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "descripcion_zona")
     private String descripcionZona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZonaEnvio")
+    @OneToMany(mappedBy = "idZonaEnvio")
     private List<Pedido> pedidoList;
 
     public ZonaEnvio() {

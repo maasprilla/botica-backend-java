@@ -9,6 +9,7 @@ import com.botica_backend.rest.auth.DigestUtil;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,13 +46,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
+    @NamedQuery(name = "Usuario.findByDni", query = "SELECT u FROM Usuario u WHERE u.dni = :dni"),
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion"),
-    @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
+    @NamedQuery(name = "Usuario.findByFechaNac", query = "SELECT u FROM Usuario u WHERE u.fechaNac = :fechaNac"),
+    @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.findByImgPerfil", query = "SELECT u FROM Usuario u WHERE u.imgPerfil = :imgPerfil"),
+    @NamedQuery(name = "Usuario.findByNombreDrogueria", query = "SELECT u FROM Usuario u WHERE u.nombreDrogueria = :nombreDrogueria"),
     @NamedQuery(name = "Usuario.findByNit", query = "SELECT u FROM Usuario u WHERE u.nit = :nit"),
     @NamedQuery(name = "Usuario.findByCamaracomercio", query = "SELECT u FROM Usuario u WHERE u.camaracomercio = :camaracomercio"),
-    @NamedQuery(name = "Usuario.findByInvima", query = "SELECT u FROM Usuario u WHERE u.invima = :invima")})
+    @NamedQuery(name = "Usuario.findByInvima", query = "SELECT u FROM Usuario u WHERE u.invima = :invima"),
+    @NamedQuery(name = "Usuario.findByRol", query = "SELECT u FROM Usuario u WHERE u.idRol.idRol = :idRol")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +74,10 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "apellido")
     private String apellido;
+    @Basic(optional = false)
+    @Size(min = 1, max = 15)
+    @Column(name = "dni")
+    private String dni;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -83,10 +95,21 @@ public class Usuario implements Serializable {
     @Column(name = "direccion")
     private String direccion;
     @Basic(optional = false)
+    @Column(name = "fecha_nac")
+    @Temporal(TemporalType.DATE)
+    private Date fechaNac;
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "clave")
-    private String clave;
+    @Column(name = "password")
+    private String password;
+    @Basic(optional = false)
+    @Size(min = 1, max = 200)
+    @Column(name = "img_perfil")
+    private String imgPerfil;
+    @Size(max = 45)
+    @Column(name = "nombre_drogueria")
+    private String nombreDrogueria;
     @Size(max = 45)
     @Column(name = "nit")
     private String nit;
@@ -98,8 +121,6 @@ public class Usuario implements Serializable {
     private String invima;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDrogueria")
     private List<Sede> sedeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Pedido> pedidoList;
     @JoinColumns({
@@ -110,6 +131,8 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     @ManyToOne(optional = false)
     private Rol idRol;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Calificacion> calificacionList;
 
     public Usuario() {
     }
@@ -118,13 +141,16 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nombre, String email, String telefono, String direccion, String clave) {
+    public Usuario(Integer idUsuario, String nombre, String dni, String email, String telefono, String direccion, Date fechaNac, String password, String imgPerfil) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
+        this.dni = dni;
         this.email = email;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.clave = clave;
+        this.fechaNac = fechaNac;
+        this.password = password;
+        this.imgPerfil = imgPerfil;
     }
 
     public Integer getIdUsuario() {
@@ -151,6 +177,14 @@ public class Usuario implements Serializable {
         this.apellido = apellido;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -175,16 +209,40 @@ public class Usuario implements Serializable {
         this.direccion = direccion;
     }
 
-    public String getClave() {
-        return clave;
+    public Date getFechaNac() {
+        return fechaNac;
     }
 
-    public void setClave(String clave) {
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         try {
-            this.clave = DigestUtil.generateDigest(clave);
+            this.password = DigestUtil.generateDigest(password);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getImgPerfil() {
+        return imgPerfil;
+    }
+
+    public void setImgPerfil(String imgPerfil) {
+        this.imgPerfil = imgPerfil;
+    }
+
+    public String getNombreDrogueria() {
+        return nombreDrogueria;
+    }
+
+    public void setNombreDrogueria(String nombreDrogueria) {
+        this.nombreDrogueria = nombreDrogueria;
     }
 
     public String getNit() {
@@ -221,15 +279,6 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
-    }
-
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
-    }
-
-    @XmlTransient
     public List<Pedido> getPedidoList() {
         return pedidoList;
     }
@@ -246,14 +295,21 @@ public class Usuario implements Serializable {
         this.ciudad = ciudad;
     }
 
-
-
     public Rol getIdRol() {
         return idRol;
     }
 
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
+    }
+
+    @XmlTransient
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
+    }
+
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
     }
 
     @Override

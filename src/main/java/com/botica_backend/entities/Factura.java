@@ -6,6 +6,7 @@
 package com.botica_backend.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,7 +36,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Factura.findByIdFactura", query = "SELECT f FROM Factura f WHERE f.idFactura = :idFactura"),
     @NamedQuery(name = "Factura.findByCodigo", query = "SELECT f FROM Factura f WHERE f.codigo = :codigo"),
     @NamedQuery(name = "Factura.findByDescripcion", query = "SELECT f FROM Factura f WHERE f.descripcion = :descripcion"),
-    @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total")})
+    @NamedQuery(name = "Factura.findByFechaCompra", query = "SELECT f FROM Factura f WHERE f.fechaCompra = :fechaCompra"),
+    @NamedQuery(name = "Factura.findByTotalFactura", query = "SELECT f FROM Factura f WHERE f.totalFactura = :totalFactura"),
+    @NamedQuery(name = "Factura.findByCantidadProductos", query = "SELECT f FROM Factura f WHERE f.cantidadProductos = :cantidadProductos"),
+    @NamedQuery(name = "Factura.findByModalidadPago", query = "SELECT f FROM Factura f WHERE f.modalidadPago = :modalidadPago"),
+    @NamedQuery(name = "Factura.findByNit", query = "SELECT f FROM Factura f WHERE f.nit = :nit")})
 public class Factura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,8 +60,26 @@ public class Factura implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "total")
-    private int total;
+    @Column(name = "fecha_compra")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCompra;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "total_factura")
+    private int totalFactura;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad_productos")
+    private int cantidadProductos;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "modalidad_pago")
+    private String modalidadPago;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "nit")
+    private int nit;
     @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
     @ManyToOne(optional = false)
     private Pedido idPedido;
@@ -69,11 +94,15 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Integer idFactura, String codigo, String descripcion, int total) {
+    public Factura(Integer idFactura, String codigo, String descripcion, Date fechaCompra, int totalFactura, int cantidadProductos, String modalidadPago, int nit) {
         this.idFactura = idFactura;
         this.codigo = codigo;
         this.descripcion = descripcion;
-        this.total = total;
+        this.fechaCompra = fechaCompra;
+        this.totalFactura = totalFactura;
+        this.cantidadProductos = cantidadProductos;
+        this.modalidadPago = modalidadPago;
+        this.nit = nit;
     }
 
     public Integer getIdFactura() {
@@ -100,12 +129,44 @@ public class Factura implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getTotal() {
-        return total;
+    public Date getFechaCompra() {
+        return fechaCompra;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setFechaCompra(Date fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public int getTotalFactura() {
+        return totalFactura;
+    }
+
+    public void setTotalFactura(int totalFactura) {
+        this.totalFactura = totalFactura;
+    }
+
+    public int getCantidadProductos() {
+        return cantidadProductos;
+    }
+
+    public void setCantidadProductos(int cantidadProductos) {
+        this.cantidadProductos = cantidadProductos;
+    }
+
+    public String getModalidadPago() {
+        return modalidadPago;
+    }
+
+    public void setModalidadPago(String modalidadPago) {
+        this.modalidadPago = modalidadPago;
+    }
+
+    public int getNit() {
+        return nit;
+    }
+
+    public void setNit(int nit) {
+        this.nit = nit;
     }
 
     public Pedido getIdPedido() {

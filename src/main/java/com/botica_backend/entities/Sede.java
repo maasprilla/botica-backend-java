@@ -72,12 +72,12 @@ public class Sede implements Serializable {
     @JoinColumn(name = "id_drogueria", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
     private Usuario idDrogueria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sede")
-    private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVendedor")
     private List<Factura> facturaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSede")
+    @OneToMany(mappedBy = "idSede")
     private List<Pedido> pedidoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sede")
+    private List<Calificacion> calificacionList;
 
     public Sede() {
     }
@@ -152,15 +152,6 @@ public class Sede implements Serializable {
     }
 
     @XmlTransient
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
-    }
-
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
-    }
-
-    @XmlTransient
     public List<Factura> getFacturaList() {
         return facturaList;
     }
@@ -176,6 +167,15 @@ public class Sede implements Serializable {
 
     public void setPedidoList(List<Pedido> pedidoList) {
         this.pedidoList = pedidoList;
+    }
+
+    @XmlTransient
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
+    }
+
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
     }
 
     @Override

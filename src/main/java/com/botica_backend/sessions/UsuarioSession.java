@@ -62,6 +62,19 @@ public class UsuarioSession {
 
     }
 
+    public List<Usuario> findAllByRol(String idRol) {
+        try {
+            return entityManager.createNamedQuery("Usuario.findByRol")
+                    .setParameter("idRol", idRol)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+
     public Usuario findByCiudad(int idCiudad) {
         try {
             return (Usuario) entityManager.createNamedQuery("Usuario.findByCiudad")

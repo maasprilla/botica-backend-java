@@ -44,7 +44,7 @@ public class ImagenPedido implements Serializable {
     private Integer idImagenPedido;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 250)
     @Column(name = "url")
     private String url;
     @JoinTable(name = "detalle_pedidos", joinColumns = {

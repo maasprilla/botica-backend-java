@@ -96,7 +96,7 @@ public class SecurityFilter implements ContainerRequestFilter, ContainerResponse
 
         @Override
         public boolean isUserInRole(String role) {
-        return rol.getIdRol().equals(Integer.parseInt(role));
+        return rol.getIdRol().equals(role);
         }
 
         @Override

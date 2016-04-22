@@ -60,4 +60,11 @@ public class UsuarioRest {
     public Usuario findById(@PathParam("id") Integer id) {
         return usuarioSession.find(id);
     }
+    
+    @GET
+    @Path("roles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> findAllByRol(@PathParam("id") String id) {
+        return usuarioSession.findAllByRol(id);
+    }
 }
