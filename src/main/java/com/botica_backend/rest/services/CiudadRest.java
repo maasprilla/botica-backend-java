@@ -1,7 +1,7 @@
-
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Ciudad;
+import com.botica_backend.entities.Usuario;
 import com.botica_backend.sessions.CiudadSession;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -24,10 +24,10 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 @Path("ciudades")
 public class CiudadRest {
-    
+
     @EJB
     CiudadSession ciudadSession;
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Ciudad ciudad) {
@@ -58,5 +58,12 @@ public class CiudadRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Ciudad findById(@PathParam("id") Integer id) {
         return ciudadSession.find(id);
+    }
+
+    @GET
+    @Path("nombre/{nombre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Ciudad> findByNombre(@PathParam("nombre") String nombre) {
+        return ciudadSession.findByNombre(nombre);
     }
 }
