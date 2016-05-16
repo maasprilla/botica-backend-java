@@ -14,6 +14,6 @@ public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
         packages("com.botica_backend.rest.services;com.botica_backend.rest.auth");
-        register (RolesAllowedDynamicFeature.class);
+//        register (RolesAllowedDynamicFeature.class);
     }
 }
