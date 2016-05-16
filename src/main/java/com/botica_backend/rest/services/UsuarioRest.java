@@ -2,7 +2,10 @@
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Usuario;
+import static com.botica_backend.rest.auth.AuthREST.LOGING_ERROR_MSG;
 import com.botica_backend.sessions.UsuarioSession;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -31,8 +35,23 @@ public class UsuarioRest {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Usuario usuario) {
+    public Response create(Usuario usuario) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        if(usuarioSession.findByEmail(usuario.getEmail())==null){
         usuarioSession.create(usuario);
+        return Response.ok()
+                .entity(gson.toJson("ACEPTADO"))
+                .build();  
+
+        }else{
+          return Response
+                  .status(Response.Status.CONFLICT)
+                  .entity(gson.toJson("el email ya se encuentra registrado"))
+                  .build();  
+        
+    
+    }
     }
 
     @PUT

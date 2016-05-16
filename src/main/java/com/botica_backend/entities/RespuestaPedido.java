@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RespuestaPedido.findAll", query = "SELECT r FROM RespuestaPedido r"),
     @NamedQuery(name = "RespuestaPedido.findByIdRespuestaPedido", query = "SELECT r FROM RespuestaPedido r WHERE r.idRespuestaPedido = :idRespuestaPedido"),
     @NamedQuery(name = "RespuestaPedido.findByDescripcion", query = "SELECT r FROM RespuestaPedido r WHERE r.descripcion = :descripcion"),
-    @NamedQuery(name = "RespuestaPedido.findByTiempoEntrega", query = "SELECT r FROM RespuestaPedido r WHERE r.tiempoEntrega = :tiempoEntrega"),
     @NamedQuery(name = "RespuestaPedido.findByAceptado", query = "SELECT r FROM RespuestaPedido r WHERE r.aceptado = :aceptado")})
 public class RespuestaPedido implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,13 +48,8 @@ public class RespuestaPedido implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "tiempo_entrega")
-    @Temporal(TemporalType.TIME)
-    private Date tiempoEntrega;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "aceptado")
-    private boolean aceptado;
+    private Integer aceptado;
     @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
     @ManyToOne(optional = false)
     private Pedido idPedido;
@@ -70,12 +64,7 @@ public class RespuestaPedido implements Serializable {
         this.idRespuestaPedido = idRespuestaPedido;
     }
 
-    public RespuestaPedido(Integer idRespuestaPedido, String descripcion, Date tiempoEntrega, boolean aceptado) {
-        this.idRespuestaPedido = idRespuestaPedido;
-        this.descripcion = descripcion;
-        this.tiempoEntrega = tiempoEntrega;
-        this.aceptado = aceptado;
-    }
+
 
     public Integer getIdRespuestaPedido() {
         return idRespuestaPedido;
@@ -93,19 +82,13 @@ public class RespuestaPedido implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Date getTiempoEntrega() {
-        return tiempoEntrega;
-    }
 
-    public void setTiempoEntrega(Date tiempoEntrega) {
-        this.tiempoEntrega = tiempoEntrega;
-    }
 
-    public boolean getAceptado() {
+    public Integer getAceptado() {
         return aceptado;
     }
 
-    public void setAceptado(boolean aceptado) {
+    public void setAceptado(Integer aceptado) {
         this.aceptado = aceptado;
     }
 
