@@ -29,6 +29,7 @@ public class EmailRest {
     public void recoveryPass(RecoveryPassword recoveryPassword) {
         try {
             HtmlEmail email = new HtmlEmail();
+            
 
             email.setHostName("smtp.gmail.com");
             email.setSmtpPort(465);

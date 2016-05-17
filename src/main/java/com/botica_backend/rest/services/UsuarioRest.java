@@ -1,4 +1,3 @@
-
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Usuario;
@@ -27,38 +26,57 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("usuarios")
 public class UsuarioRest {
-    
+
     @EJB
     UsuarioSession usuarioSession;
-    
-    
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Usuario usuario) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        if(usuarioSession.findByEmail(usuario.getEmail())==null){
-        usuarioSession.create(usuario);
-        return Response.ok()
-                .entity(gson.toJson("ACEPTADO"))
-                .build();  
+        if (usuarioSession.findByEmail(usuario.getEmail()) == null) {
+            usuarioSession.create(usuario);
+            return Response.ok()
+                    .entity(gson.toJson("ACEPTADO"))
+                    .build();
 
-        }else{
-          return Response
-                  .status(Response.Status.CONFLICT)
-                  .entity(gson.toJson("el email ya se encuentra registrado"))
-                  .build();  
-        
-    
-    }
+        } else {
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity(gson.toJson("el email ya se encuentra registrado"))
+                    .build();
+
+        }
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void update(@PathParam("id") Integer id, Usuario usuario) {
-        usuarioSession.update(usuario);
+        Usuario user = usuarioSession.find(id);
+
+        user.setNombre(usuario.getNombre());
+        user.setApellido(usuario.getApellido());
+        user.setDni(usuario.getDni());
+        user.setEmail(usuario.getEmail());
+        user.setFechaNac(usuario.getFechaNac());
+        user.setIdRol(usuario.getIdRol());
+        user.setIdUsuario(usuario.getIdUsuario());
+        user.setImgPerfil(usuario.getImgPerfil());
+        user.setCiudad(usuario.getCiudad());
+        user.setDireccion(usuario.getDireccion());
+        user.setTelefono(usuario.getTelefono());
+
+        if (user.getIdRol().getIdRol().equals("DROG")) {
+            user.setNombreDrogueria(usuario.getNombreDrogueria());
+            user.setInvima(usuario.getInvima());
+            user.setNit(usuario.getNit());
+            user.setCamaracomercio(usuario.getCamaracomercio());
+        }
+
+        usuarioSession.update(user);
+
     }
 
     @DELETE
@@ -79,7 +97,7 @@ public class UsuarioRest {
     public Usuario findById(@PathParam("id") Integer id) {
         return usuarioSession.find(id);
     }
-    
+
     @GET
     @Path("roles/{id}")
     @Produces(MediaType.APPLICATION_JSON)

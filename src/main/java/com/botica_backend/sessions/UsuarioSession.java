@@ -6,6 +6,10 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Usuario;
+import com.botica_backend.rest.auth.AuthUtils;
+import com.nimbusds.jose.JOSEException;
+import com.sun.net.httpserver.HttpServer;
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,6 +17,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -125,6 +130,11 @@ public class UsuarioSession {
             return null;
         }
 
+    }
+
+    public Usuario getAuthUser(HttpServletRequest request) throws ParseException, JOSEException {
+        String subject = AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY));
+        return find(Integer.parseInt(subject));
     }
 
 }
