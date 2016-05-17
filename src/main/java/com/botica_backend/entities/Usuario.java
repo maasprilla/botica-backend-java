@@ -119,6 +119,9 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "invima")
     private String invima;
+    @Size(max = 64)
+    @Column(name = "codigo_recuperacion_pass")
+    private String codigoRecuperacionPass;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDrogueria")
     private List<Sede> sedeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
@@ -267,6 +270,14 @@ public class Usuario implements Serializable {
 
     public void setInvima(String invima) {
         this.invima = invima;
+    }
+
+    public String getCodigoRecuperacionPass() {
+        return codigoRecuperacionPass;
+    }
+
+    public void setCodigoRecuperacionPass(String codigoRecuperacionPass) {
+        this.codigoRecuperacionPass = codigoRecuperacionPass;
     }
 
     @XmlTransient
