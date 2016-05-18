@@ -58,7 +58,14 @@ public class EmailRest {
             email.setSSL(true);
             email.setFrom("services@botica.com");
             email.setSubject("Restablecer Contraseña Botica");
-            email.setHtmlMsg("<h1 style=" + "color:blue;" + ">Restablecer Contraseña</h1> Email: " + recoveryPassword.getEmail() + " abra e siguiente enlace para continuar con el proceso de recuperacion es http://localhost:8001/#/passconfrm/" + user.getIdUsuario() + "/" + cd);
+            email.setHtmlMsg("<div style=" + "max-width:35em;" + "><form style=" + "border:1px solid; background:#f3f3f3" + 
+                    "><div style=" + "border-bottom:1px solid; text-align:center; background:#152836; display:inline-block; width:100%" + 
+                    "><img src=" + "../com.botica_backend.logo.image/logo.png" + ">style=" + "width:5em; padding-top:1em" +
+                    "><h1 style=" + "margin:0; padding:0.5em 0.5em 0.5em 0; color:white; font-family:sans-serif; width:80%; display:inline-block; float:right; text-align:right" + 
+                    ">Restablecer Contraseña</h1>" + recoveryPassword.getEmail() + "</div>" + "<div" + "><p style=" + 
+                    "padding-left:2em; margin:2em 0 2em 0; font-family:sans-serif" + ">Abra el siguiente enlace para continuar con el proceso de recuperación " + 
+                    "http://localhost:8001/#/passconfrm/" + user.getIdUsuario() + "</p>" + "</div>" + "</form>" + "</div>" + cd);
+                    //">Restablecer Contraseña</h1> Email: " + recoveryPassword.getEmail() + " abra e siguiente enlace para continuar con el proceso de recuperacion es http://localhost:8001/#/passconfrm/" + user.getIdUsuario() + "/" + cd);
             // email.add("djaranzazu@misena.edu.co","maasprilla35@misena.edu.co","hjhenao@misena.edu.co","iyaguirre@misena.edu.co","jcpolanco23@misena.edu.co","aelopez346@misena.edu.co"); //este email es el destinatario, osea el tuyo mismo si queres que te llegen a tu bandeja de entrada
 //            email.addTo("maasprilla35@misena.edu.co");
 //            email.addTo("djaranzazu@misena.edu.co"); //este email es el destinatario, osea el tuyo mismo si queres que te llegen a tu bandeja de entrada
