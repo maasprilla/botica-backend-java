@@ -1,7 +1,6 @@
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Usuario;
-import static com.botica_backend.rest.auth.AuthREST.LOGING_ERROR_MSG;
 import com.botica_backend.sessions.UsuarioSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -78,6 +77,19 @@ public class UsuarioRest {
         usuarioSession.update(user);
 
     }
+    
+    @PUT
+    @Path("passconfirm/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updatePass(@PathParam("id") Integer id, Usuario usuario) {
+        Usuario user = usuarioSession.find(id);
+        String newpass=usuario.getCamaracomercio();
+        user.setPassword(newpass);
+        usuarioSession.update(user);
+          int x=0;
+//        usuarioSession.update(user);
+
+    }
 
     @DELETE
     @Path("{id}")
@@ -103,5 +115,12 @@ public class UsuarioRest {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Usuario> findAllByRol(@PathParam("id") String id) {
         return usuarioSession.findAllByRol(id);
+    }
+
+    @GET
+    @Path("idcodigo/{id}/{codigo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario findByIdAndCode(@PathParam("id") String id, @PathParam("codigo") String codigo) {      
+        return usuarioSession.findByIdAndCode(Integer.parseInt(id), codigo);
     }
 }

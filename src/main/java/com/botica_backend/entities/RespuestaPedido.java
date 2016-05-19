@@ -35,6 +35,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RespuestaPedido.findByDescripcion", query = "SELECT r FROM RespuestaPedido r WHERE r.descripcion = :descripcion"),
     @NamedQuery(name = "RespuestaPedido.findByAceptado", query = "SELECT r FROM RespuestaPedido r WHERE r.aceptado = :aceptado")})
 public class RespuestaPedido implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tiempo_entrega")
+    @Temporal(TemporalType.TIME)
+    private Date tiempoEntrega;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "aceptado")
+    private boolean aceptado;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,10 +55,6 @@ public class RespuestaPedido implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "aceptado")
-    private Integer aceptado;
     @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
     @ManyToOne(optional = false)
     private Pedido idPedido;
@@ -84,13 +89,6 @@ public class RespuestaPedido implements Serializable {
 
 
 
-    public Integer getAceptado() {
-        return aceptado;
-    }
-
-    public void setAceptado(Integer aceptado) {
-        this.aceptado = aceptado;
-    }
 
     public Pedido getIdPedido() {
         return idPedido;
@@ -131,6 +129,22 @@ public class RespuestaPedido implements Serializable {
     @Override
     public String toString() {
         return "com.botica_backend.entities.RespuestaPedido[ idRespuestaPedido=" + idRespuestaPedido + " ]";
+    }
+
+    public Date getTiempoEntrega() {
+        return tiempoEntrega;
+    }
+
+    public void setTiempoEntrega(Date tiempoEntrega) {
+        this.tiempoEntrega = tiempoEntrega;
+    }
+
+    public boolean getAceptado() {
+        return aceptado;
+    }
+
+    public void setAceptado(boolean aceptado) {
+        this.aceptado = aceptado;
     }
     
 }

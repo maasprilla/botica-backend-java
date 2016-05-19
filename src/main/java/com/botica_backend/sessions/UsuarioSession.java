@@ -8,7 +8,6 @@ package com.botica_backend.sessions;
 import com.botica_backend.entities.Usuario;
 import com.botica_backend.rest.auth.AuthUtils;
 import com.nimbusds.jose.JOSEException;
-import com.sun.net.httpserver.HttpServer;
 import java.text.ParseException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +59,35 @@ public class UsuarioSession {
             return (Usuario) entityManager.createNamedQuery("Usuario.findByRol")
                     .setParameter("idRoles", idRol)
                     .getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+
+//    public List<Usuario> findByIdAndCode(int idUsuario, String codigo) {
+//        try {
+//            return (List<Usuario>) entityManager.createNamedQuery("Usuario.findByCodigoRecuperacionPass")
+//                    .setParameter("codigoRecuperacionPass", codigo)
+//                    .getResultList();
+//        } catch (NonUniqueResultException ex) {
+//            throw ex;
+//        } catch (NoResultException ex) {
+//            return null;
+//        }
+//
+//    }
+    public Usuario findByIdAndCode(int idUsuario, String codigo) {
+        try {
+
+            Query query = entityManager.createNativeQuery("SELECT * FROM usuarios u WHERE u.id_usuario=?id_usuario AND u.codigo_recuperacion_pass=?codigo_recuperacion_pass", Usuario.class);
+            query.setParameter("id_usuario", idUsuario);
+            query.setParameter("codigo_recuperacion_pass", codigo);
+            Usuario result = (Usuario) query.getSingleResult();
+            return result;
+
         } catch (NonUniqueResultException ex) {
             throw ex;
         } catch (NoResultException ex) {
