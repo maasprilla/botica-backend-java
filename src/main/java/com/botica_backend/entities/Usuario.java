@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNit", query = "SELECT u FROM Usuario u WHERE u.nit = :nit"),
     @NamedQuery(name = "Usuario.findByCamaracomercio", query = "SELECT u FROM Usuario u WHERE u.camaracomercio = :camaracomercio"),
     @NamedQuery(name = "Usuario.findByInvima", query = "SELECT u FROM Usuario u WHERE u.invima = :invima"),
-    @NamedQuery(name = "Usuario.findByRol", query = "SELECT u FROM Usuario u WHERE u.idRol.idRol = :idRol")})
+    @NamedQuery(name = "Usuario.findByCodigoRecuperacionPass", query = "SELECT u FROM Usuario u WHERE u.codigoRecuperacionPass = :codigoRecuperacionPass")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,8 +74,7 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "apellido")
     private String apellido;
-    @Basic(optional = false)
-    @Size(min = 1, max = 15)
+    @Size(max = 15)
     @Column(name = "dni")
     private String dni;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -94,7 +93,6 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "direccion")
     private String direccion;
-    @Basic(optional = false)
     @Column(name = "fecha_nac")
     @Temporal(TemporalType.DATE)
     private Date fechaNac;
@@ -103,8 +101,7 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     @Column(name = "img_perfil")
     private String imgPerfil;
     @Size(max = 45)
@@ -144,16 +141,13 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nombre, String dni, String email, String telefono, String direccion, Date fechaNac, String password, String imgPerfil) {
+    public Usuario(Integer idUsuario, String nombre, String email, String telefono, String direccion, String password) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
-        this.dni = dni;
         this.email = email;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.fechaNac = fechaNac;
         this.password = password;
-        this.imgPerfil = imgPerfil;
     }
 
     public Integer getIdUsuario() {
