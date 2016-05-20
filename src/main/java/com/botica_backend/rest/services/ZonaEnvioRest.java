@@ -49,7 +49,7 @@ public class ZonaEnvioRest {
     }
 
     @GET
-    @RolesAllowed("1")
+    //@RolesAllowed("1")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ZonaEnvio> findAll() {
         return zonaEnvioSession.findAll();
