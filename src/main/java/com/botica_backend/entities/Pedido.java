@@ -51,7 +51,6 @@ public class Pedido implements Serializable {
     @Column(name = "id_pedido")
     private Integer idPedido;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "direccion")
     private String direccion;
@@ -59,12 +58,10 @@ public class Pedido implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "ciudad")
     private String ciudad;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
