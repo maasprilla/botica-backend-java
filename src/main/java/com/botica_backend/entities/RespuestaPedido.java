@@ -32,18 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RespuestaPedido.findAll", query = "SELECT r FROM RespuestaPedido r"),
     @NamedQuery(name = "RespuestaPedido.findByIdRespuestaPedido", query = "SELECT r FROM RespuestaPedido r WHERE r.idRespuestaPedido = :idRespuestaPedido"),
-    @NamedQuery(name = "RespuestaPedido.findByDescripcion", query = "SELECT r FROM RespuestaPedido r WHERE r.descripcion = :descripcion"),
-    @NamedQuery(name = "RespuestaPedido.findByAceptado", query = "SELECT r FROM RespuestaPedido r WHERE r.aceptado = :aceptado")})
+    @NamedQuery(name = "RespuestaPedido.findByDescripcion", query = "SELECT r FROM RespuestaPedido r WHERE r.descripcion = :descripcion")})
 public class RespuestaPedido implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "tiempo_entrega")
-    @Temporal(TemporalType.TIME)
-    private Date tiempoEntrega;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "aceptado")
-    private boolean aceptado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -131,20 +122,6 @@ public class RespuestaPedido implements Serializable {
         return "com.botica_backend.entities.RespuestaPedido[ idRespuestaPedido=" + idRespuestaPedido + " ]";
     }
 
-    public Date getTiempoEntrega() {
-        return tiempoEntrega;
-    }
-
-    public void setTiempoEntrega(Date tiempoEntrega) {
-        this.tiempoEntrega = tiempoEntrega;
-    }
-
-    public boolean getAceptado() {
-        return aceptado;
-    }
-
-    public void setAceptado(boolean aceptado) {
-        this.aceptado = aceptado;
-    }
+  
     
 }

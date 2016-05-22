@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -101,9 +102,9 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "password")
     private String password;
-    @Size(max = 200)
+    @Lob
     @Column(name = "img_perfil")
-    private String imgPerfil;
+    private byte[] imgPerfil;
     @Size(max = 45)
     @Column(name = "nombre_drogueria")
     private String nombreDrogueria;
@@ -226,11 +227,11 @@ public class Usuario implements Serializable {
         }
     }
 
-    public String getImgPerfil() {
+    public byte[] getImgPerfil() {
         return imgPerfil;
     }
 
-    public void setImgPerfil(String imgPerfil) {
+    public void setImgPerfil(byte[] imgPerfil) {
         this.imgPerfil = imgPerfil;
     }
 
