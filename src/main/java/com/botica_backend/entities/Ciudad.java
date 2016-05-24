@@ -25,18 +25,18 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Luis
+ * @author adsi1
  */
 @Entity
 @Table(name = "ciudades")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c"),
-    @NamedQuery(name = "Ciudad.findAllByNameAsc", query = "SELECT c FROM Ciudad c order by c.nombre"),
     @NamedQuery(name = "Ciudad.findByIdCiudad", query = "SELECT c FROM Ciudad c WHERE c.ciudadPK.idCiudad = :idCiudad"),
-    @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre like :nombre"),
-    @NamedQuery(name = "Ciudad.findByIddepartamento", query = "SELECT c FROM Ciudad c WHERE c.ciudadPK.iddepartamento = :iddepartamento")})
+    @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Ciudad.findByIdDepartamento", query = "SELECT c FROM Ciudad c WHERE c.ciudadPK.idDepartamento = :idDepartamento")})
 public class Ciudad implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected CiudadPK ciudadPK;
@@ -46,8 +46,10 @@ public class Ciudad implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad")
+    private List<Pedido> pedidoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad")
     private List<Usuario> usuarioList;
-    @JoinColumn(name = "iddepartamento", referencedColumnName = "id_departamento", insertable = false, updatable = false)
+    @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Departamento departamento;
 
@@ -63,8 +65,8 @@ public class Ciudad implements Serializable {
         this.nombre = nombre;
     }
 
-    public Ciudad(int idCiudad, int iddepartamento) {
-        this.ciudadPK = new CiudadPK(idCiudad, iddepartamento);
+    public Ciudad(int idCiudad, int idDepartamento) {
+        this.ciudadPK = new CiudadPK(idCiudad, idDepartamento);
     }
 
     public CiudadPK getCiudadPK() {
@@ -81,6 +83,15 @@ public class Ciudad implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
     }
 
     @XmlTransient

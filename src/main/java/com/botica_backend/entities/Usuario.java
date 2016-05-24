@@ -102,9 +102,6 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "password")
     private String password;
-    @Lob
-    @Column(name = "img_perfil")
-    private byte[] imgPerfil;
     @Size(max = 45)
     @Column(name = "nombre_drogueria")
     private String nombreDrogueria;
@@ -117,6 +114,9 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "invima")
     private String invima;
+    @Lob
+    @Column(name = "img_perfil")
+    private byte[] imgPerfil;
     @Size(max = 64)
     @Column(name = "codigo_recuperacion_pass")
     private String codigoRecuperacionPass;
