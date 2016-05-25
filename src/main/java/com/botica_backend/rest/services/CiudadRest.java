@@ -50,7 +50,7 @@ public class CiudadRest {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ciudad> findAll() {
-        return ciudadSession.findAllByNombreAsc();
+        return ciudadSession.findAll();
     }
 
     @GET

@@ -53,6 +53,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion"),
     @NamedQuery(name = "Usuario.findByFechaNac", query = "SELECT u FROM Usuario u WHERE u.fechaNac = :fechaNac"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.findByRol", query = "SELECT u FROM Usuario u WHERE u.idRol.idRol = :idRol"),
     @NamedQuery(name = "Usuario.findByImgPerfil", query = "SELECT u FROM Usuario u WHERE u.imgPerfil = :imgPerfil"),
     @NamedQuery(name = "Usuario.findByNombreDrogueria", query = "SELECT u FROM Usuario u WHERE u.nombreDrogueria = :nombreDrogueria"),
     @NamedQuery(name = "Usuario.findByNit", query = "SELECT u FROM Usuario u WHERE u.nit = :nit"),
@@ -126,7 +127,7 @@ public class Usuario implements Serializable {
     private List<Pedido> pedidoList;
     @JoinColumns({
         @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad"),
-        @JoinColumn(name = "id_departamento", referencedColumnName = "iddepartamento")})
+        @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento")})
     @ManyToOne(optional = false)
     private Ciudad ciudad;
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
