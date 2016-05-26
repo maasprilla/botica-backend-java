@@ -7,10 +7,15 @@ package com.botica_backend.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -75,6 +81,12 @@ public class Medicamento implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "titular")
     private String titular;
+
+    @JoinTable(name = "pedidos_has_medicamentos", joinColumns = {
+        @JoinColumn(name = "id_medicamento", referencedColumnName = "id_medicamento")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")})
+    @ManyToMany
+    private List<Pedido> pedidoList;
 
     public Medicamento() {
     }
@@ -149,6 +161,15 @@ public class Medicamento implements Serializable {
         this.titular = titular;
     }
 
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -157,15 +178,41 @@ public class Medicamento implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Medicamento)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Medicamento other = (Medicamento) object;
-        if ((this.idMedicamento == null && other.idMedicamento != null) || (this.idMedicamento != null && !this.idMedicamento.equals(other.idMedicamento))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
+        final Medicamento other = (Medicamento) obj;
+        if (!Objects.equals(this.idMedicamento, other.idMedicamento)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.registroSanitario, other.registroSanitario)) {
+            return false;
+        }
+        if (!Objects.equals(this.estadoRegistro, other.estadoRegistro)) {
+            return false;
+        }
+        if (!Objects.equals(this.modalidad, other.modalidad)) {
+            return false;
+        }
+        if (!Objects.equals(this.titular, other.titular)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaVencimiento, other.fechaVencimiento)) {
+            return false;
+        }
+//        if (!Objects.equals(this.pedidoList, other.pedidoList)) {
+//            return false;
+//        }
         return true;
     }
 
@@ -173,5 +220,5 @@ public class Medicamento implements Serializable {
     public String toString() {
         return "com.botica_backend.entities.Medicamento[ idMedicamento=" + idMedicamento + " ]";
     }
-    
+
 }

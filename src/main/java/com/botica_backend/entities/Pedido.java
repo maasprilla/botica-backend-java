@@ -7,6 +7,8 @@ package com.botica_backend.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -73,6 +76,9 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "id_zona_envio", referencedColumnName = "id_zona_envio")
     @ManyToOne
     private ZonaEnvio idZonaEnvio;
+
+    @ManyToMany(mappedBy = "pedidoList")
+    private List<Medicamento> medicamentoList;
 
     public Pedido() {
     }
@@ -151,6 +157,14 @@ public class Pedido implements Serializable {
         this.idZonaEnvio = idZonaEnvio;
     }
 
+    public List<Medicamento> getMedicamentoList() {
+        return medicamentoList;
+    }
+
+    public void setMedicamentoList(List<Medicamento> medicamentoList) {
+        this.medicamentoList = medicamentoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -159,15 +173,44 @@ public class Pedido implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pedido)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Pedido other = (Pedido) object;
-        if ((this.idPedido == null && other.idPedido != null) || (this.idPedido != null && !this.idPedido.equals(other.idPedido))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
+        final Pedido other = (Pedido) obj;
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.idPedido, other.idPedido)) {
+            return false;
+        }
+        if (!Objects.equals(this.fecha, other.fecha)) {
+            return false;
+        }
+        if (!Objects.equals(this.ciudad, other.ciudad)) {
+            return false;
+        }
+        if (!Objects.equals(this.idSede, other.idSede)) {
+            return false;
+        }
+        if (!Objects.equals(this.idusuario, other.idusuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.idZonaEnvio, other.idZonaEnvio)) {
+            return false;
+        }
+//        if (!Objects.equals(this.medicamentoList, other.medicamentoList)) {
+//            return false;
+//        }
         return true;
     }
 

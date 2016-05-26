@@ -5,7 +5,6 @@
  */
 package com.botica_backend.sessions;
 
-import com.botica_backend.entities.Ciudad;
 import com.botica_backend.entities.Medicamento;
 import java.util.List;
 import javax.ejb.Stateless;
