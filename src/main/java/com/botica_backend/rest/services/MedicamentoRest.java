@@ -5,6 +5,7 @@
  */
 package com.botica_backend.rest.services;
 
+import com.botica_backend.entities.Ciudad;
 import com.botica_backend.entities.Medicamento;
 import com.botica_backend.sessions.MedicamentoSession;
 import java.util.List;
@@ -61,5 +62,12 @@ public class MedicamentoRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Medicamento findById(@PathParam("id") Integer id) {
         return medicamentoSession.find(id);
+    }
+    
+    @GET
+    @Path("nombre/{nombre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Medicamento> findByNombre(@PathParam("nombre") String nombre) {
+        return medicamentoSession.findByNombre(nombre);
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.botica_backend.sessions;
 
+import com.botica_backend.entities.Ciudad;
 import com.botica_backend.entities.Medicamento;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,30 +19,39 @@ import javax.persistence.criteria.CriteriaQuery;
  */
 @Stateless
 public class MedicamentoSession {
-@PersistenceContext
+
+    @PersistenceContext
     private EntityManager entityManager;
 
-public void create(Medicamento medicamento){
-    entityManager.persist(medicamento);
-}
+    public void create(Medicamento medicamento) {
+        entityManager.persist(medicamento);
+    }
 
-public void update(Medicamento medicamento){
-    entityManager.merge(medicamento);
-}
+    public void update(Medicamento medicamento) {
+        entityManager.merge(medicamento);
+    }
 
-public void remove(Medicamento medicamento){
-    entityManager.remove(medicamento);
-}
+    public void remove(Medicamento medicamento) {
+        entityManager.remove(medicamento);
+    }
 
-public List<Medicamento> findAll(){
-    CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
-    cq.select(cq.from(Medicamento.class));
-    return entityManager.createQuery(cq).getResultList();
-    
-}
-public Medicamento find(int id) {
+    public List<Medicamento> findAll() {
+        CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Medicamento.class));
+        return entityManager.createQuery(cq).getResultList();
+
+    }
+
+    public Medicamento find(int id) {
 
         return entityManager.find(Medicamento.class, id);
 
-}
+    }
+
+    public List<Medicamento> findByNombre(String nombre) {
+        return entityManager.createNamedQuery("Medicamento.findByNombre")
+                .setParameter("nombre", nombre + "%")
+                .setMaxResults(10)
+                .getResultList();
+    }
 }
