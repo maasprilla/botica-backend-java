@@ -55,6 +55,19 @@ public class PedidoSession {
 
     }
 
+    public List<Pedido> findByEstadoPedido(int idEstadoPedido) {
+        try {
+            return (List<Pedido>) entityManager.createNamedQuery("Pedido.findByEstadoPedido")
+                    .setParameter("idEstadoPedido", idEstadoPedido)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+
     public Pedido find(int id) {
         return entityManager.find(Pedido.class, id);
 

@@ -82,10 +82,8 @@ public class Medicamento implements Serializable {
     @Column(name = "titular")
     private String titular;
 
-    @JoinTable(name = "pedidos_has_medicamentos", joinColumns = {
-        @JoinColumn(name = "id_medicamento", referencedColumnName = "id_medicamento")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")})
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "medicamentoList")
     private List<Pedido> pedidoList;
 
     public Medicamento() {

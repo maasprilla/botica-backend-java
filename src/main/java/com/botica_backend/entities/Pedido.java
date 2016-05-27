@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByDireccion", query = "SELECT p FROM Pedido p WHERE p.direccion = :direccion"),
     @NamedQuery(name = "Pedido.findByDescripcion", query = "SELECT p FROM Pedido p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Pedido.findByUsuario", query = "SELECT p FROM Pedido p WHERE p.idusuario.idUsuario = :idusuario"),
+    @NamedQuery(name = "Pedido.findByEstadoPedido", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = :idEstadoPedido"),
     @NamedQuery(name = "Pedido.findByFecha", query = "SELECT p FROM Pedido p WHERE p.fecha = :fecha")})
 public class Pedido implements Serializable {
 
@@ -77,8 +79,15 @@ public class Pedido implements Serializable {
     @ManyToOne
     private ZonaEnvio idZonaEnvio;
 
-    @ManyToMany(mappedBy = "pedidoList")
+    @JoinTable(name = "pedidos_has_medicamentos", joinColumns = {
+        @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_medicamento", referencedColumnName = "id_medicamento")})
+    @ManyToMany
     private List<Medicamento> medicamentoList;
+
+    @JoinColumn(name = "id_estado_pedido", referencedColumnName = "id_estado_pedido")
+    @ManyToOne(optional = false)
+    private EstadoPedido idEstadoPedido;
 
     public Pedido() {
     }
@@ -163,6 +172,14 @@ public class Pedido implements Serializable {
 
     public void setMedicamentoList(List<Medicamento> medicamentoList) {
         this.medicamentoList = medicamentoList;
+    }
+
+    public EstadoPedido getIdEstadoPedido() {
+        return idEstadoPedido;
+    }
+
+    public void setIdEstadoPedido(EstadoPedido idEstadoPedido) {
+        this.idEstadoPedido = idEstadoPedido;
     }
 
     @Override

@@ -136,6 +136,11 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Calificacion> calificacionList;
 
+    @Column(name = "latitud")
+    private Double latitud;
+    @Column(name = "longitud")
+    private Double longitud;
+
     public Usuario() {
     }
 
@@ -275,6 +280,24 @@ public class Usuario implements Serializable {
     public void setCodigoRecuperacionPass(String codigoRecuperacionPass) {
         this.codigoRecuperacionPass = codigoRecuperacionPass;
     }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+    
+    
 
     @XmlTransient
     public List<Sede> getSedeList() {

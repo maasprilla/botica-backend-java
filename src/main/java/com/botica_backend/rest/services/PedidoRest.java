@@ -57,4 +57,11 @@ public class PedidoRest {
     public Pedido findById(@PathParam("id") Integer id) {
         return pedidoSession.find(id);
     }
+
+    @GET
+    @Path("estadoPedido/{idEstadoPedido}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findByidEstadoPedido(@PathParam("idEstadoPedido") Integer id) {
+        return pedidoSession.findByEstadoPedido(id);
+    }
 }

@@ -66,6 +66,9 @@ public class UsuarioRest {
         user.setCiudad(usuario.getCiudad());
         user.setDireccion(usuario.getDireccion());
         user.setTelefono(usuario.getTelefono());
+        user.setLatitud(usuario.getLatitud());
+        user.setLongitud(usuario.getLongitud());
+        
 
         if (user.getIdRol().getIdRol().equals("DROG")) {
             user.setNombreDrogueria(usuario.getNombreDrogueria());
