@@ -13,25 +13,26 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Luis
+ * @author adsi1
  */
 @Embeddable
 public class CiudadPK implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_ciudad")
     private int idCiudad;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "iddepartamento")
-    private int iddepartamento;
+    @Column(name = "id_departamento")
+    private int idDepartamento;
 
     public CiudadPK() {
     }
 
-    public CiudadPK(int idCiudad, int iddepartamento) {
+    public CiudadPK(int idCiudad, int idDepartamento) {
         this.idCiudad = idCiudad;
-        this.iddepartamento = iddepartamento;
+        this.idDepartamento = idDepartamento;
     }
 
     public int getIdCiudad() {
@@ -42,19 +43,19 @@ public class CiudadPK implements Serializable {
         this.idCiudad = idCiudad;
     }
 
-    public int getIddepartamento() {
-        return iddepartamento;
+    public int getIdDepartamento() {
+        return idDepartamento;
     }
 
-    public void setIddepartamento(int iddepartamento) {
-        this.iddepartamento = iddepartamento;
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idCiudad;
-        hash += (int) iddepartamento;
+        hash += (int) idDepartamento;
         return hash;
     }
 
@@ -68,7 +69,7 @@ public class CiudadPK implements Serializable {
         if (this.idCiudad != other.idCiudad) {
             return false;
         }
-        if (this.iddepartamento != other.iddepartamento) {
+        if (this.idDepartamento != other.idDepartamento) {
             return false;
         }
         return true;
@@ -76,7 +77,7 @@ public class CiudadPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.botica_backend.entities.CiudadPK[ idCiudad=" + idCiudad + ", iddepartamento=" + iddepartamento + " ]";
+        return "com.botica_backend.entities.CiudadPK[ idCiudad=" + idCiudad + ", idDepartamento=" + idDepartamento + " ]";
     }
     
 }

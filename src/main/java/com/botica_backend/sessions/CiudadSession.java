@@ -51,9 +51,7 @@ public class CiudadSession {
         return entityManager.find(Ciudad.class, id);
     }
 
-    public List<Ciudad> findAllByNombreAsc() {
-        return entityManager.createNamedQuery("Ciudad.findAllByNameAsc").getResultList();
-    }
+
 
     public List<Ciudad> findByNombre(String nombre) {
         return entityManager.createNamedQuery("Ciudad.findByNombre")

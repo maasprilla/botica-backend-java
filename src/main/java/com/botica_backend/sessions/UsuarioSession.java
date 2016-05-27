@@ -67,18 +67,7 @@ public class UsuarioSession {
 
     }
 
-//    public List<Usuario> findByIdAndCode(int idUsuario, String codigo) {
-//        try {
-//            return (List<Usuario>) entityManager.createNamedQuery("Usuario.findByCodigoRecuperacionPass")
-//                    .setParameter("codigoRecuperacionPass", codigo)
-//                    .getResultList();
-//        } catch (NonUniqueResultException ex) {
-//            throw ex;
-//        } catch (NoResultException ex) {
-//            return null;
-//        }
-//
-//    }
+
     public Usuario findByIdAndCode(int idUsuario, String codigo) {
         try {
 

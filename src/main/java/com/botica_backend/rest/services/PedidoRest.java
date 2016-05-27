@@ -1,4 +1,3 @@
-
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Pedido;
@@ -23,10 +22,10 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 @Path("pedidos")
 public class PedidoRest {
-    
+
     @EJB
     PedidoSession pedidoSession;
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Pedido pedido) {
