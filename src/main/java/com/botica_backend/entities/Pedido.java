@@ -252,7 +252,6 @@ public class Pedido implements Serializable {
         this.respuestaPedidoList = respuestaPedidoList;
     }
 
-    @XmlTransient
     public List<PedidoHasMedicamento> getPedidoHasMedicamentoList() {
         return pedidoHasMedicamentoList;
     }

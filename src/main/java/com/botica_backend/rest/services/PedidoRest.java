@@ -1,6 +1,7 @@
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Pedido;
+import com.botica_backend.entities.PedidoHasMedicamento;
 import com.botica_backend.sessions.PedidoSession;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,6 +30,9 @@ public class PedidoRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Pedido pedido) {
+        for(PedidoHasMedicamento item: pedido.getPedidoHasMedicamentoList()){
+            item.setIdPedido(pedido);
+        }
         pedidoSession.create(pedido);
     }
 
