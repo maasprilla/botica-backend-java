@@ -1,6 +1,7 @@
-
 package com.botica_backend.rest.services;
 
+import com.botica_backend.entities.MedicamentoHasRespuestaPedido;
+import com.botica_backend.entities.PedidoHasMedicamento;
 import com.botica_backend.entities.RespuestaPedido;
 import com.botica_backend.sessions.RespuestaPedidoSession;
 import java.util.List;
@@ -20,17 +21,19 @@ import javax.ws.rs.core.MediaType;
  *
  * @author usuario
  */
-
 @Stateless
-@Path ("respuestaspedidos")
+@Path("respuestaspedidos")
 public class RespuestaPedidoRest {
-    
+
     @EJB
     RespuestaPedidoSession respuestaPedidoSession;
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(RespuestaPedido respuestaPedido) {
+        for (MedicamentoHasRespuestaPedido item : respuestaPedido.getMedicamentoHasRespuestaPedidoList()) {
+            item.setIdRespuestaPedido(respuestaPedido);
+        }
         respuestaPedidoSession.create(respuestaPedido);
     }
 

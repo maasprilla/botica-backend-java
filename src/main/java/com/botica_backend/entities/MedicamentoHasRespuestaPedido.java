@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MedicamentoHasRespuestaPedido.findAll", query = "SELECT m FROM MedicamentoHasRespuestaPedido m"),
     @NamedQuery(name = "MedicamentoHasRespuestaPedido.findByIdMedicamentoHasRespuesta", query = "SELECT m FROM MedicamentoHasRespuestaPedido m WHERE m.idMedicamentoHasRespuesta = :idMedicamentoHasRespuesta"),
     @NamedQuery(name = "MedicamentoHasRespuestaPedido.findByEstadoMedicamento", query = "SELECT m FROM MedicamentoHasRespuestaPedido m WHERE m.estadoMedicamento = :estadoMedicamento"),
+    @NamedQuery(name = "MedicamentoHasRespuestaPedido.findByIdRespuestaPedido", query = "SELECT m FROM MedicamentoHasRespuestaPedido m WHERE m.idRespuestaPedido.idRespuestaPedido = :idRespuestaPedido"),
     @NamedQuery(name = "MedicamentoHasRespuestaPedido.findByCantidad", query = "SELECT m FROM MedicamentoHasRespuestaPedido m WHERE m.cantidad = :cantidad"),
     @NamedQuery(name = "MedicamentoHasRespuestaPedido.findByPrecio", query = "SELECT m FROM MedicamentoHasRespuestaPedido m WHERE m.precio = :precio")})
 public class MedicamentoHasRespuestaPedido implements Serializable {
@@ -92,6 +94,7 @@ public class MedicamentoHasRespuestaPedido implements Serializable {
         this.precio = precio;
     }
 
+    
     public Medicamento getIdMedicamento() {
         return idMedicamento;
     }
@@ -100,6 +103,7 @@ public class MedicamentoHasRespuestaPedido implements Serializable {
         this.idMedicamento = idMedicamento;
     }
 
+    @XmlTransient
     public RespuestaPedido getIdRespuestaPedido() {
         return idRespuestaPedido;
     }

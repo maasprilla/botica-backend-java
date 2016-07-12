@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,11 +49,10 @@ public class RespuestaPedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_respuesta_pedido")
     private Integer idRespuestaPedido;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "descripcion")
     private String descripcion;
@@ -139,7 +140,6 @@ public class RespuestaPedido implements Serializable {
         this.fecha = fecha;
     }
 
-    @XmlTransient
     public List<MedicamentoHasRespuestaPedido> getMedicamentoHasRespuestaPedidoList() {
         return medicamentoHasRespuestaPedidoList;
     }

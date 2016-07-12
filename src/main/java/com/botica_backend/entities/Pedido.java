@@ -173,6 +173,7 @@ public class Pedido implements Serializable {
         this.idZonaEnvio = idZonaEnvio;
     }
 
+    @XmlTransient
     public List<Medicamento> getMedicamentoList() {
         return medicamentoList;
     }
@@ -252,6 +253,8 @@ public class Pedido implements Serializable {
         this.respuestaPedidoList = respuestaPedidoList;
     }
 
+    
+    
     public List<PedidoHasMedicamento> getPedidoHasMedicamentoList() {
         return pedidoHasMedicamentoList;
     }
