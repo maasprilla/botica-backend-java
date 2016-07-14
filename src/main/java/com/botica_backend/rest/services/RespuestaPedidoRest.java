@@ -62,4 +62,11 @@ public class RespuestaPedidoRest {
     public RespuestaPedido findById(@PathParam("id") Integer id) {
         return respuestaPedidoSession.find(id);
     }
+
+    @GET
+    @Path("usuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<RespuestaPedido> findByIdUsuario(@PathParam("idUsuario") Integer id) {
+        return respuestaPedidoSession.findByIdUsuario(id);
+    }
 }

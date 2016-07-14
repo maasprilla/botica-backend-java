@@ -40,6 +40,9 @@ public class PedidoRest {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void update(@PathParam("id") Integer id, Pedido pedido) {
+        for(PedidoHasMedicamento item: pedido.getPedidoHasMedicamentoList()){
+            item.setIdPedido(pedido);
+        }
         pedidoSession.update(pedido);
     }
 
