@@ -49,7 +49,7 @@ public class RespuestaPedidoSession {
 
     }
     
-        public List<RespuestaPedido> findByIdUsuario(Integer idUsuario) {
+        public List<RespuestaPedido> findByIdUsuario(Usuario idUsuario) {
         try {
             return (List<RespuestaPedido>) entityManager.createNamedQuery("RespuestaPedido.findByIdUsuario")
                     .setParameter("idUsuario", idUsuario)
