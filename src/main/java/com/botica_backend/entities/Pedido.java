@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +18,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,8 +45,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByDireccion", query = "SELECT p FROM Pedido p WHERE p.direccion = :direccion"),
     @NamedQuery(name = "Pedido.findByDescripcion", query = "SELECT p FROM Pedido p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Pedido.findByUsuario", query = "SELECT p FROM Pedido p WHERE p.idusuario.idUsuario = :idusuario"),
+    @NamedQuery(name = "Pedido.findByEstadoPedidoAndUsuario", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = :idEstadoPedido AND p.idusuario= :idUsuario"),
+    @NamedQuery(name = "Pedido.findByEstadoPedido", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = :idEstadoPedido"),
     @NamedQuery(name = "Pedido.findByFecha", query = "SELECT p FROM Pedido p WHERE p.fecha = :fecha")})
 public class Pedido implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedido")
+    private List<RespuestaPedido> respuestaPedidoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedido")
+    private List<PedidoHasMedicamento> pedidoHasMedicamentoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,8 +88,15 @@ public class Pedido implements Serializable {
     @ManyToOne
     private ZonaEnvio idZonaEnvio;
 
-    @ManyToMany(mappedBy = "pedidoList")
+    @JoinTable(name = "pedidos_has_medicamentos", joinColumns = {
+        @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_medicamento", referencedColumnName = "id_medicamento")})
+    @ManyToMany
     private List<Medicamento> medicamentoList;
+
+    @JoinColumn(name = "id_estado_pedido", referencedColumnName = "id_estado_pedido")
+    @ManyToOne(optional = false)
+    private EstadoPedido idEstadoPedido;
 
     public Pedido() {
     }
@@ -157,12 +175,21 @@ public class Pedido implements Serializable {
         this.idZonaEnvio = idZonaEnvio;
     }
 
+    @XmlTransient
     public List<Medicamento> getMedicamentoList() {
         return medicamentoList;
     }
 
     public void setMedicamentoList(List<Medicamento> medicamentoList) {
         this.medicamentoList = medicamentoList;
+    }
+
+    public EstadoPedido getIdEstadoPedido() {
+        return idEstadoPedido;
+    }
+
+    public void setIdEstadoPedido(EstadoPedido idEstadoPedido) {
+        this.idEstadoPedido = idEstadoPedido;
     }
 
     @Override
@@ -217,6 +244,23 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "com.botica_backend.entities.Pedido[ idPedido=" + idPedido + " ]";
+    }
+
+    @XmlTransient
+    public List<RespuestaPedido> getRespuestaPedidoList() {
+        return respuestaPedidoList;
+    }
+
+    public void setRespuestaPedidoList(List<RespuestaPedido> respuestaPedidoList) {
+        this.respuestaPedidoList = respuestaPedidoList;
+    }
+
+    public List<PedidoHasMedicamento> getPedidoHasMedicamentoList() {
+        return pedidoHasMedicamentoList;
+    }
+
+    public void setPedidoHasMedicamentoList(List<PedidoHasMedicamento> pedidoHasMedicamentoList) {
+        this.pedidoHasMedicamentoList = pedidoHasMedicamentoList;
     }
 
 }

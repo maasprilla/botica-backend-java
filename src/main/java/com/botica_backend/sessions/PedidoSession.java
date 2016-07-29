@@ -6,6 +6,7 @@
 package com.botica_backend.sessions;
 
 import com.botica_backend.entities.Pedido;
+import com.botica_backend.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -47,6 +48,33 @@ public class PedidoSession {
             return (Pedido) entityManager.createNamedQuery("Pedido.findByUsuario")
                     .setParameter("idusuarios", idUsuario)
                     .getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+
+    public List<Pedido> findByEstadoPedidoAndUsuario(int idEstadoPedido, Usuario idUsuario) {
+        try {
+            return (List<Pedido>) entityManager.createNamedQuery("Pedido.findByEstadoPedidoAndUsuario")
+                    .setParameter("idEstadoPedido", idEstadoPedido)
+                    .setParameter("idUsuario", idUsuario)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+    
+    public List<Pedido> findByEstadoPedido(int idEstadoPedido) {
+        try {
+            return (List<Pedido>) entityManager.createNamedQuery("Pedido.findByEstadoPedido")
+                    .setParameter("idEstadoPedido", idEstadoPedido)
+                    .getResultList();
         } catch (NonUniqueResultException ex) {
             throw ex;
         } catch (NoResultException ex) {

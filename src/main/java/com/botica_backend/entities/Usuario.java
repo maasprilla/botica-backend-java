@@ -115,9 +115,6 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "invima")
     private String invima;
-    @Lob
-    @Column(name = "img_perfil")
-    private byte[] imgPerfil;
     @Size(max = 64)
     @Column(name = "codigo_recuperacion_pass")
     private String codigoRecuperacionPass;
@@ -135,6 +132,15 @@ public class Usuario implements Serializable {
     private Rol idRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Calificacion> calificacionList;
+
+    @Lob
+    @Column(name = "img_perfil")
+    private byte[] imgPerfil;
+
+    @Column(name = "latitud")
+    private Double latitud;
+    @Column(name = "longitud")
+    private Double longitud;
 
     public Usuario() {
     }
@@ -274,6 +280,22 @@ public class Usuario implements Serializable {
 
     public void setCodigoRecuperacionPass(String codigoRecuperacionPass) {
         this.codigoRecuperacionPass = codigoRecuperacionPass;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 
     @XmlTransient

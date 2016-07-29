@@ -57,7 +57,7 @@ public class UsuarioSession {
     public Usuario findByRol(int idRol) {
         try {
             return (Usuario) entityManager.createNamedQuery("Usuario.findByRol")
-                    .setParameter("idRoles", idRol)
+                    .setParameter("idRol", idRol)
                     .getSingleResult();
         } catch (NonUniqueResultException ex) {
             throw ex;

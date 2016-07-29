@@ -5,8 +5,10 @@
  */
 package com.botica_backend.sessions;
 
+import com.botica_backend.entities.Pedido;
 import com.botica_backend.entities.RespuestaPedido;
 import static com.botica_backend.entities.RespuestaPedido_.idRespuestaPedido;
+import com.botica_backend.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,11 +44,16 @@ public class RespuestaPedidoSession {
         return entityManager.createQuery(cq).getResultList();
     }
     
-    public RespuestaPedido find(int id) {
+    public RespuestaPedido find(Integer id) {
+        return entityManager.find(RespuestaPedido.class, id);
+
+    }
+    
+        public List<RespuestaPedido> findByIdUsuario(Usuario idUsuario) {
         try {
-            return (RespuestaPedido) entityManager.createNamedQuery("RespuestaPedido.findByIdRespuestaPedido")
-                    .setParameter("idRespuestaPedido", idRespuestaPedido)
-                    .getSingleResult();
+            return (List<RespuestaPedido>) entityManager.createNamedQuery("RespuestaPedido.findByIdUsuario")
+                    .setParameter("idUsuario", idUsuario)
+                    .getResultList();
         } catch (NonUniqueResultException ex) {
             throw ex;
         } catch (NoResultException ex) {
