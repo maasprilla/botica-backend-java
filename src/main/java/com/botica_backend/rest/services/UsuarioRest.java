@@ -68,7 +68,6 @@ public class UsuarioRest {
         user.setTelefono(usuario.getTelefono());
         user.setLatitud(usuario.getLatitud());
         user.setLongitud(usuario.getLongitud());
-        
 
         if (user.getIdRol().getIdRol().equals("DROG")) {
             user.setNombreDrogueria(usuario.getNombreDrogueria());
@@ -80,16 +79,16 @@ public class UsuarioRest {
         usuarioSession.update(user);
 
     }
-    
+
     @PUT
     @Path("passconfirm/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updatePass(@PathParam("id") Integer id, Usuario usuario) {
         Usuario user = usuarioSession.find(id);
-        String newpass=usuario.getCamaracomercio();
+        String newpass = usuario.getCamaracomercio();
         user.setPassword(newpass);
         usuarioSession.update(user);
-          int x=0;
+        int x = 0;
 //        usuarioSession.update(user);
 
     }
@@ -121,9 +120,16 @@ public class UsuarioRest {
     }
 
     @GET
+    @Path("nombredrogueria/{nombre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> findDrogueriaByNombre(@PathParam("nombre") String nombre) {
+        return usuarioSession.findDrogueriaByNombre(nombre);
+    }
+
+    @GET
     @Path("idcodigo/{id}/{codigo}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario findByIdAndCode(@PathParam("id") String id, @PathParam("codigo") String codigo) {      
+    public Usuario findByIdAndCode(@PathParam("id") String id, @PathParam("codigo") String codigo) {
         return usuarioSession.findByIdAndCode(Integer.parseInt(id), codigo);
     }
 }
