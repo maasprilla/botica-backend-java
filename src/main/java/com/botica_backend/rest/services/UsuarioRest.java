@@ -1,10 +1,15 @@
 package com.botica_backend.rest.services;
 
 import com.botica_backend.entities.Usuario;
+import com.botica_backend.rest.auth.DigestUtil;
 import com.botica_backend.sessions.UsuarioSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -35,6 +40,11 @@ public class UsuarioRest {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         if (usuarioSession.findByEmail(usuario.getEmail()) == null) {
+            try {
+                usuario.setPassword(DigestUtil.generateDigest(usuario.getPassword()));
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+                Logger.getLogger(UsuarioRest.class.getName()).log(Level.SEVERE, null, ex);
+            }
             usuarioSession.create(usuario);
             return Response.ok()
                     .entity(gson.toJson("ACEPTADO"))
@@ -53,43 +63,12 @@ public class UsuarioRest {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void update(@PathParam("id") Integer id, Usuario usuario) {
-        Usuario user = usuarioSession.find(id);
-
-        user.setNombre(usuario.getNombre());
-        user.setApellido(usuario.getApellido());
-        user.setDni(usuario.getDni());
-        user.setEmail(usuario.getEmail());
-        user.setFechaNac(usuario.getFechaNac());
-        user.setIdRol(usuario.getIdRol());
-        user.setIdUsuario(usuario.getIdUsuario());
-        user.setImgPerfil(usuario.getImgPerfil());
-        user.setCiudad(usuario.getCiudad());
-        user.setDireccion(usuario.getDireccion());
-        user.setTelefono(usuario.getTelefono());
-        user.setLatitud(usuario.getLatitud());
-        user.setLongitud(usuario.getLongitud());
-
-        if (user.getIdRol().getIdRol().equals("DROG")) {
-            user.setNombreDrogueria(usuario.getNombreDrogueria());
-            user.setInvima(usuario.getInvima());
-            user.setNit(usuario.getNit());
-            user.setCamaracomercio(usuario.getCamaracomercio());
+        try {
+            usuario.setPassword(DigestUtil.generateDigest(usuario.getPassword()));
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(UsuarioRest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        usuarioSession.update(user);
-
-    }
-
-    @PUT
-    @Path("passconfirm/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void updatePass(@PathParam("id") Integer id, Usuario usuario) {
-        Usuario user = usuarioSession.find(id);
-        String newpass = usuario.getCamaracomercio();
-        user.setPassword(newpass);
-        usuarioSession.update(user);
-        int x = 0;
-//        usuarioSession.update(user);
+        usuarioSession.update(usuario);
 
     }
 

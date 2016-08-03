@@ -228,11 +228,7 @@ public class Usuario implements Serializable {
     }
 
     public void setPassword(String password) {
-        try {
-            this.password = DigestUtil.generateDigest(password);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.password = password;
     }
 
     public byte[] getImgPerfil() {

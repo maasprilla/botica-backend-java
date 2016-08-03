@@ -62,14 +62,7 @@ public class EmailRest {
                     + "          <p style=\"padding-left:2em; margin:2em 0 2em 0; font-family:sans-serif\">Abra el siguiente enlace para continuar con el proceso de recuperación <a href=\"http://localhost:8001/#/passconfirm/" + user.getIdUsuario() + "/" + cd + "\">http://localhost:8001/#/passconfrm/" + user.getIdUsuario() + "/" + cd + "</a></p>\n"
                     + "      \n"
                     + "        </div>");
-            //">Restablecer Contraseña</h1> Email: " + recoveryPassword.getEmail() + " abra e siguiente enlace para continuar con el proceso de recuperacion es http://localhost:8001/#/passconfrm/" + user.getIdUsuario() + "/" + cd);
-            // email.add("djaranzazu@misena.edu.co","maasprilla35@misena.edu.co","hjhenao@misena.edu.co","iyaguirre@misena.edu.co","jcpolanco23@misena.edu.co","aelopez346@misena.edu.co"); //este email es el destinatario, osea el tuyo mismo si queres que te llegen a tu bandeja de entrada
-//            email.addTo("maasprilla35@misena.edu.co");
-//            email.addTo("djaranzazu@misena.edu.co"); //este email es el destinatario, osea el tuyo mismo si queres que te llegen a tu bandeja de entrada
-//            email.addTo("hjhenao@misena.edu.co");
-//            email.addTo("iyaguirre@misena.edu.co");
-//            email.addTo("jcpolanco23@misena.edu.co");
-//            email.addTo("aelopez346@misena.edu.co");
+    
             email.addTo(recoveryPassword.getEmail());
             user.setCodigoRecuperacionPass(cd);
             usuarioSession.update(user);
