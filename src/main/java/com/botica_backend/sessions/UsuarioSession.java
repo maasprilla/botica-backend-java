@@ -67,6 +67,19 @@ public class UsuarioSession {
 
     }
 
+    public List<Usuario> findDrogueriaByNombre(String nombre) {
+        try {
+            return (List<Usuario>) entityManager.createNamedQuery("Usuario.findByNombreAndRol")
+                    .setParameter("idRol", "DROG")
+                    .setParameter("nombre", nombre+"%")
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
 
     public Usuario findByIdAndCode(int idUsuario, String codigo) {
         try {
