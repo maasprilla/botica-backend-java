@@ -1,7 +1,9 @@
 package com.botica_backend.rest.services;
 
+import com.botica_backend.entities.Sede;
 import com.botica_backend.entities.Usuario;
 import com.botica_backend.rest.auth.DigestUtil;
+import com.botica_backend.sessions.SedeSession;
 import com.botica_backend.sessions.UsuarioSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,6 +35,11 @@ public class UsuarioRest {
 
     @EJB
     UsuarioSession usuarioSession;
+    
+    @EJB
+    SedeSession sedeSession;
+    
+    
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -46,6 +53,11 @@ public class UsuarioRest {
                 Logger.getLogger(UsuarioRest.class.getName()).log(Level.SEVERE, null, ex);
             }
             usuarioSession.create(usuario);
+            if(usuario.getIdRol().getIdRol().equals("DROG")){
+                Sede sede=new Sede(null, usuario.getNombre(), usuario.getDireccion(), usuario.getEmail(), usuario.getTelefono());
+                sede.setIdDrogueria(usuario);
+                sedeSession.create(sede);
+            }
             return Response.ok()
                     .entity(gson.toJson("ACEPTADO"))
                     .build();

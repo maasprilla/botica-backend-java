@@ -39,8 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "RespuestaPedido.findAll", query = "SELECT r FROM RespuestaPedido r"),
     @NamedQuery(name = "RespuestaPedido.findByIdRespuestaPedido", query = "SELECT r FROM RespuestaPedido r WHERE r.idRespuestaPedido = :idRespuestaPedido"),
     @NamedQuery(name = "RespuestaPedido.findByIdUsuario", query = "SELECT r FROM RespuestaPedido r WHERE r.idPedido.idusuario = :idUsuario AND r.idPedido.idEstadoPedido.idEstadoPedido=1"),
+    @NamedQuery(name = "RespuestaPedido.findByIdDrogueria", query = "SELECT r FROM RespuestaPedido r WHERE r.idSede.idDrogueria = :idUsuario AND r.idPedido.idEstadoPedido.idEstadoPedido=1"),
     @NamedQuery(name = "RespuestaPedido.findByDescripcion", query = "SELECT r FROM RespuestaPedido r WHERE r.descripcion = :descripcion")})
 public class RespuestaPedido implements Serializable {
+
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -50,7 +52,7 @@ public class RespuestaPedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_respuesta_pedido")
     private Integer idRespuestaPedido;
     @Basic(optional = false)
@@ -71,8 +73,6 @@ public class RespuestaPedido implements Serializable {
         this.idRespuestaPedido = idRespuestaPedido;
     }
 
-
-
     public Integer getIdRespuestaPedido() {
         return idRespuestaPedido;
     }
@@ -88,9 +88,6 @@ public class RespuestaPedido implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-
-
 
     public Pedido getIdPedido() {
         return idPedido;
@@ -149,6 +146,4 @@ public class RespuestaPedido implements Serializable {
         this.medicamentoHasRespuestaPedidoList = medicamentoHasRespuestaPedidoList;
     }
 
-  
-    
 }

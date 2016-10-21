@@ -89,6 +89,20 @@ public class PedidoRest {
         }
 
     }
+    
+    @GET
+    @Path("pedidoConcretadoDrogueria")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findByConcretadoAndDrogueria() {
+        try {
+            return pedidoSession.findByConcretadoAndDrogueria(new Usuario(Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)))));
+        } catch (ParseException | JOSEException ex) {
+            //Logger.getLogger(PedidoRest.class.getName()).log(Level.SEVERE, null, ex);
+            //poner 
+            return null;
+        }
+
+    }
 
     @GET
     @Path("estadoPedido/{idEstadoPedido}")

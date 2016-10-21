@@ -23,17 +23,18 @@ import javax.persistence.criteria.CriteriaQuery;
  */
 @Stateless
 public class RespuestaPedidoSession {
-@PersistenceContext
+
+    @PersistenceContext
     private EntityManager entityManager;
 
     public void create(RespuestaPedido respuestaPedido) {
         entityManager.persist(respuestaPedido);
     }
-    
+
     public void update(RespuestaPedido respuestaPedido) {
         entityManager.merge(respuestaPedido);
     }
-    
+
     public void remove(RespuestaPedido respuestaPedido) {
         entityManager.remove(respuestaPedido);
     }
@@ -43,16 +44,29 @@ public class RespuestaPedidoSession {
         cq.select(cq.from(RespuestaPedido.class));
         return entityManager.createQuery(cq).getResultList();
     }
-    
+
     public RespuestaPedido find(Integer id) {
         return entityManager.find(RespuestaPedido.class, id);
 
     }
-    
-        public List<RespuestaPedido> findByIdUsuario(Usuario idUsuario) {
+
+    public List<RespuestaPedido> findByIdUsuario(Usuario idUsuario) {
         try {
             return (List<RespuestaPedido>) entityManager.createNamedQuery("RespuestaPedido.findByIdUsuario")
                     .setParameter("idUsuario", idUsuario)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+    
+    public List<RespuestaPedido> findByIdDrogueria(Usuario idDrogueia) {
+        try {
+            return (List<RespuestaPedido>) entityManager.createNamedQuery("RespuestaPedido.findByIdDrogueria")
+                    .setParameter("idUsuario", idDrogueia)
                     .getResultList();
         } catch (NonUniqueResultException ex) {
             throw ex;

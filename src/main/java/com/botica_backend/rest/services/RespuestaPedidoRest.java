@@ -3,9 +3,11 @@ package com.botica_backend.rest.services;
 import com.botica_backend.entities.MedicamentoHasRespuestaPedido;
 import com.botica_backend.entities.PedidoHasMedicamento;
 import com.botica_backend.entities.RespuestaPedido;
+import com.botica_backend.entities.Sede;
 import com.botica_backend.entities.Usuario;
 import com.botica_backend.rest.auth.AuthUtils;
 import com.botica_backend.sessions.RespuestaPedidoSession;
+import com.botica_backend.sessions.UsuarioSession;
 import com.nimbusds.jose.JOSEException;
 import java.text.ParseException;
 import java.util.List;
@@ -34,16 +36,27 @@ public class RespuestaPedidoRest {
     @EJB
     RespuestaPedidoSession respuestaPedidoSession;
     
+    @EJB
+    UsuarioSession usuarioSession;
+    
     @Context
     private HttpServletRequest request;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(RespuestaPedido respuestaPedido) {
+        try{
+        Usuario currentDrog=usuarioSession.find(Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY))));
+        Sede sede=currentDrog.getSedeList().get(0);
         for (MedicamentoHasRespuestaPedido item : respuestaPedido.getMedicamentoHasRespuestaPedidoList()) {
             item.setIdRespuestaPedido(respuestaPedido);
         }
+        respuestaPedido.setIdSede(sede);
         respuestaPedidoSession.create(respuestaPedido);
+        } catch (ParseException | JOSEException ex) {
+            //Logger.getLogger(PedidoRest.class.getName()).log(Level.SEVERE, null, ex);
+            //poner 
+        }
     }
 
     @PUT
@@ -78,6 +91,20 @@ public class RespuestaPedidoRest {
     public List<RespuestaPedido> findByIdUsuario() {
         try {
             return respuestaPedidoSession.findByIdUsuario(new Usuario(Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)))));
+        } catch (ParseException | JOSEException ex) {
+            //Logger.getLogger(PedidoRest.class.getName()).log(Level.SEVERE, null, ex);
+            //poner 
+            return null;
+        }
+        
+    }
+    
+    @GET
+    @Path("drogueria")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<RespuestaPedido> findByIdDrogueria() {
+        try {
+            return respuestaPedidoSession.findByIdDrogueria(new Usuario(Integer.parseInt(AuthUtils.getSubject(request.getHeader(AuthUtils.AUTH_HEADER_KEY)))));
         } catch (ParseException | JOSEException ex) {
             //Logger.getLogger(PedidoRest.class.getName()).log(Level.SEVERE, null, ex);
             //poner 

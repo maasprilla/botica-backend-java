@@ -70,6 +70,19 @@ public class PedidoSession {
 
     }
     
+    public List<Pedido> findByConcretadoAndDrogueria(Usuario idDrogueria) {
+        try {
+            return (List<Pedido>) entityManager.createNamedQuery("Pedido.findByConcretadoAndDrogueria")
+                    .setParameter("idUsuario", idDrogueria)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+    
     public List<Pedido> findByEstadoPedido(int idEstadoPedido) {
         try {
             return (List<Pedido>) entityManager.createNamedQuery("Pedido.findByEstadoPedido")

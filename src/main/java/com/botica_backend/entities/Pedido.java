@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pedido.findByIdPedido", query = "SELECT p FROM Pedido p WHERE p.idPedido = :idPedido"),
     @NamedQuery(name = "Pedido.findByDireccion", query = "SELECT p FROM Pedido p WHERE p.direccion = :direccion"),
     @NamedQuery(name = "Pedido.findByDescripcion", query = "SELECT p FROM Pedido p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Pedido.findByUsuario", query = "SELECT p FROM Pedido p WHERE p.idusuario.idUsuario = :idusuario"),
     @NamedQuery(name = "Pedido.findByEstadoPedidoAndUsuario", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = :idEstadoPedido AND p.idusuario= :idUsuario"),
+    @NamedQuery(name = "Pedido.findByConcretadoAndDrogueria", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = 3 AND p.idSede.idDrogueria =:idUsuario"),
     @NamedQuery(name = "Pedido.findByEstadoPedido", query = "SELECT p FROM Pedido p WHERE p.idEstadoPedido.idEstadoPedido = :idEstadoPedido"),
     @NamedQuery(name = "Pedido.findByFecha", query = "SELECT p FROM Pedido p WHERE p.fecha = :fecha")})
 public class Pedido implements Serializable {
